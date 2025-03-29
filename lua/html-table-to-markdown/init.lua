@@ -24,7 +24,7 @@ local opts = {
 
 ---@param options HTTM.Config?
 local function setup_options(options)
-	opts = opts or vim.tbl_deep_extend("force", opts, options)
+	opts = vim.tbl_deep_extend("force", opts, options or {})
 end
 
 ---@type string exec
