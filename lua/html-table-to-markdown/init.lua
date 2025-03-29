@@ -29,9 +29,7 @@ end
 
 ---@type string exec
 ---@return boolean
-local function executable(exec)
-	return vim.fn.executable(exec) == 1
-end
+local function executable(exec) return vim.fn.executable(exec) == 1 end
 
 ---@type string message
 ---@return nil
@@ -43,9 +41,7 @@ local function echo(message)
 end
 
 ---@param feature string
-local function has(feature)
-	return vim.fn.has(feature) == 1
-end
+local function has(feature) return vim.fn.has(feature) == 1 end
 
 ---@param input_cmd string
 ---@param input? string
@@ -89,9 +85,7 @@ end
 local function get_content()
 	local command = opts.clipboard.cmd .. " " .. opts.clipboard.args
 	local output, exit_code = execute(command)
-	if exit_code == 0 then
-		return output
-	end
+	if exit_code == 0 then return output end
 end
 
 ---@param html string
@@ -99,17 +93,13 @@ end
 local function convert(html)
 	local command = opts.pandoc.cmd .. " " .. opts.pandoc.args
 	local output, exit_code = execute(command, html)
-	if exit_code == 0 then
-		return output
-	end
+	if exit_code == 0 then return output end
 end
 
 ---@param string string
----@param pattern string
+---@param pattern string?
 local function split(string, pattern)
-	if pattern == nil then
-		pattern = "%s"
-	end
+	if not pattern then pattern = "%s" end
 	local t = {}
 	for str in string.gmatch(string, "([^" .. pattern .. "]+)") do
 		table.insert(t, str)
@@ -140,13 +130,9 @@ M.setup = function(options)
 
 	vim.api.nvim_create_user_command("PasteMarkdownTableFromHtmlFromClipboard", function()
 		local html = get_content()
-		if not html then
-			return
-		end
+		if not html then return end
 		local markdown = convert(html)
-		if not markdown then
-			return
-		end
+		if not markdown then return end
 		insert_markup(markdown)
 	end, { desc = "Insert markdown table from html table" })
 end
