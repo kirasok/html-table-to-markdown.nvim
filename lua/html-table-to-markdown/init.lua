@@ -127,12 +127,16 @@ local M = {}
 ---@param options HTTM.Config?
 M.setup = function(options)
 	setup_options(options)
+	local error = false
 	if not executable(opts.pandoc.cmd) then
 		echo("Can't find " .. opts.pandoc.cmd)
+		error = true
 	end
 	if not executable(opts.clipboard.cmd) then
 		echo("Can't find " .. opts.clipboard.cmd)
+		error = true
 	end
+	if error then return end
 
 	vim.api.nvim_create_user_command("PasteMarkdownTableFromHtmlFromClipboard", function()
 		local html = get_content()
