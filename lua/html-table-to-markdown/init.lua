@@ -85,15 +85,13 @@ local function execute(input_cmd, input, execute_directly)
 	return output, exit_code
 end
 
----@return string|nil
+---@return string? clipboard
 local function get_content()
 	local command = opts.clipboard.cmd .. " " .. opts.clipboard.args
 	local output, exit_code = execute(command)
 	if exit_code == 0 then
 		return output
 	end
-
-	return nil
 end
 
 ---@param html string
