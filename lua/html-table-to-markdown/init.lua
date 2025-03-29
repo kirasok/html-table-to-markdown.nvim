@@ -60,8 +60,8 @@ local function execute(input_cmd, input, execute_directly)
 	if execute_directly or shell:match("powershell") or shell:match("pwsh") then
 		cmd = input_cmd
 
-	-- WSL requires the command to have the format:
-	-- powershell.exe -Command 'command "path/to/file"'
+		-- WSL requires the command to have the format:
+		-- powershell.exe -Command 'command "path/to/file"'
 	elseif has("wsl") then
 		if input_cmd:match("curl") then
 			cmd = input_cmd
@@ -69,12 +69,12 @@ local function execute(input_cmd, input, execute_directly)
 			cmd = "powershell.exe -NoProfile -Command '" .. input_cmd:gsub("'", '"') .. "'"
 		end
 
-	-- cmd.exe requires the command to have the format:
-	-- powershell.exe -Command "command 'path/to/file'"
+		-- cmd.exe requires the command to have the format:
+		-- powershell.exe -Command "command 'path/to/file'"
 	elseif has("win32") then
 		cmd = 'powershell.exe -NoProfile -Command "' .. input_cmd:gsub('"', "'") .. '"'
 
-	-- otherwise (linux, macos), execute the command directly
+		-- otherwise (linux, macos), execute the command directly
 	else
 		cmd = "sh -c " .. vim.fn.shellescape(input_cmd)
 	end
